@@ -186,7 +186,9 @@ export const update = mutation({
     }
 
     if (args.password !== undefined) {
-      const normalizedPassword = normalizeProvidedPassword(args.password ?? undefined);
+      const normalizedPassword = normalizeProvidedPassword(
+        args.password ?? undefined,
+      );
       if (normalizedPassword) {
         updates.passwordHash = await hashPassword(normalizedPassword);
         updates.password = undefined;
@@ -241,7 +243,10 @@ export const issueAccessGrant = mutation({
     grantToken: v.union(v.string(), v.null()),
   }),
   handler: async (ctx, args) => {
-    const globalAccessLimit = await shareLinkRateLimiter.limit(ctx, "grantGlobal");
+    const globalAccessLimit = await shareLinkRateLimiter.limit(
+      ctx,
+      "grantGlobal",
+    );
     if (!globalAccessLimit.ok) {
       return { ok: false, grantToken: null };
     }

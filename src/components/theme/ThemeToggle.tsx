@@ -47,7 +47,11 @@ const ThemeContext = createContext<ThemeContextValue | null>(null);
 const emptySubscribe = () => () => {};
 
 function useMounted() {
-  return useSyncExternalStore(emptySubscribe, () => true, () => false);
+  return useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  );
 }
 
 export function useTheme() {
@@ -77,7 +81,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     if (!mounted) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === "l") {
+      if (
+        (e.metaKey || e.ctrlKey) &&
+        e.shiftKey &&
+        e.key.toLowerCase() === "l"
+      ) {
         e.preventDefault();
         toggleTheme();
       }
@@ -89,7 +97,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const value = useMemo(
     () => ({ theme, toggleTheme, mounted }),
-    [theme, toggleTheme, mounted]
+    [theme, toggleTheme, mounted],
   );
 
   return (
