@@ -1,6 +1,13 @@
 import { v } from "convex/values";
 import { internalMutation, mutation, query } from "./_generated/server";
-import { getUser, identityAvatarUrl, identityEmail, identityName, requireUser, requireTeamAccess } from "./auth";
+import {
+  getUser,
+  identityAvatarUrl,
+  identityEmail,
+  identityName,
+  requireUser,
+  requireTeamAccess,
+} from "./auth";
 import { getTeamSubscriptionState } from "./billingHelpers";
 
 function normalizedEmail(value: string) {
@@ -16,7 +23,8 @@ function generateSlug(name: string): string {
 }
 
 function generateToken(): string {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   let result = "";
   for (let i = 0; i < 32; i++) {
     result += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -86,7 +94,7 @@ export const list = query({
       memberships.map(async (membership) => {
         const team = await ctx.db.get(membership.teamId);
         return team ? { ...team, role: membership.role } : null;
-      })
+      }),
     );
 
     return teams.filter((t): t is NonNullable<typeof t> => Boolean(t));
@@ -108,7 +116,7 @@ export const listWithProjects = query({
       memberships.map(async (membership) => {
         const team = await ctx.db.get(membership.teamId);
         if (!team) return null;
-        
+
         const projects = await ctx.db
           .query("projects")
           .withIndex("by_team", (q) => q.eq("teamId", team._id))
@@ -125,11 +133,11 @@ export const listWithProjects = query({
               ...project,
               videoCount: videos.length,
             };
-          })
+          }),
         );
-          
+
         return { ...team, role: membership.role, projects: projectsWithCounts };
-      })
+      }),
     );
 
     return teams.filter((t): t is NonNullable<typeof t> => Boolean(t));
@@ -193,7 +201,7 @@ export const inviteMember = mutation({
     const existingMembership = await ctx.db
       .query("teamMembers")
       .withIndex("by_team_and_email", (q) =>
-        q.eq("teamId", args.teamId).eq("userEmail", inviteEmail)
+        q.eq("teamId", args.teamId).eq("userEmail", inviteEmail),
       )
       .unique();
 
@@ -267,7 +275,7 @@ export const acceptInvite = mutation({
     const existingMembership = await ctx.db
       .query("teamMembers")
       .withIndex("by_team_and_user", (q) =>
-        q.eq("teamId", invite.teamId).eq("userClerkId", user.subject)
+        q.eq("teamId", invite.teamId).eq("userClerkId", user.subject),
       )
       .unique();
 

@@ -115,7 +115,11 @@ export async function hashPassword(password: string): Promise<string> {
   }
 
   const salt = crypto.getRandomValues(new Uint8Array(PASSWORD_SALT_BYTES));
-  const hash = await derivePasswordHashBytes(password, salt, PASSWORD_ITERATIONS);
+  const hash = await derivePasswordHashBytes(
+    password,
+    salt,
+    PASSWORD_ITERATIONS,
+  );
   return `${PASSWORD_HASH_VERSION}$${PASSWORD_ITERATIONS}$${bytesToHex(salt)}$${bytesToHex(hash)}`;
 }
 
@@ -136,7 +140,11 @@ export async function verifyPassword(
 
     const salt = hexToBytes(saltHex);
     const storedHash = hexToBytes(hashHex);
-    const derivedHash = await derivePasswordHashBytes(password, salt, iterations);
+    const derivedHash = await derivePasswordHashBytes(
+      password,
+      salt,
+      iterations,
+    );
     return constantTimeEqual(derivedHash, storedHash);
   } catch {
     return false;

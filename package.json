@@ -10,6 +10,7 @@
     "build:vercel": "bunx convex deploy --cmd 'bun run build' --cmd-url-env-var-name VITE_CONVEX_URL",
     "start": "vite preview --port 5296",
     "lint": "eslint app src convex --ignore-pattern 'convex/_generated/**'",
+    "format": "prettier --write src/**/*.{ts,js}",
     "typecheck": "tsc --noEmit",
     "typecheck:convex": "bunx convex typecheck",
     "generate:og": "bun run scripts/generate-og.tsx"
@@ -46,7 +47,8 @@
     "react-dom": "19.2.3",
     "stripe": "^20.3.0",
     "tailwind-merge": "^3.4.0",
-    "video.js": "^8.23.4"
+    "video.js": "^8.23.4",
+    "prettier": "^3.7.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.34.0",

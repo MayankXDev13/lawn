@@ -14,6 +14,10 @@ export function projectPath(teamSlug: string, projectId: string) {
   return `/dashboard/${teamSlug}/${projectId}`;
 }
 
-export function videoPath(teamSlug: string, projectId: string, videoId: string) {
+export function videoPath(
+  teamSlug: string,
+  projectId: string,
+  videoId: string,
+) {
   return `/dashboard/${teamSlug}/${projectId}/${videoId}`;
 }

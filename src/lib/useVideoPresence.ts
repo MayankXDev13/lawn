@@ -117,7 +117,16 @@ export function useVideoPresence(input: {
         });
       }
     };
-  }, [clientId, convex.url, disconnect, enabled, heartbeat, intervalMs, shareToken, videoId]);
+  }, [
+    clientId,
+    convex.url,
+    disconnect,
+    enabled,
+    heartbeat,
+    intervalMs,
+    shareToken,
+    videoId,
+  ]);
 
   const state = useQuery(
     api.videoPresence.list,
